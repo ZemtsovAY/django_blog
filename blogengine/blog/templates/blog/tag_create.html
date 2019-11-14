@@ -1,0 +1,28 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+    Blog Engine - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <form class="" action="{% url 'tag_create_url' %}" method="post">
+        {% csrf_token %}
+        {% for fild in form %}
+            <div class="form-group">
+                {% if fild.errors %}
+                    <div class="alert alert-danger">
+                        {{fild.errors}}
+                    </div>
+                {%endif%}
+                {{ fild.label }}
+                {{ fild}}
+            </div>
+        {%endfor%}
+
+
+        <button type="submit" class="btn btn-primary">Create Tag</button>
+
+
+
+    </form>
+{% endblock %}
