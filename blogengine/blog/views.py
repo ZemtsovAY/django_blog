@@ -21,6 +21,7 @@ class TagList(ObjectListMixin, View):
     model = Tag
     template = 'blog/tags_list.html'
 
+
 class TagCreate(View):
     def get(self, request):
         form = TagForm()
@@ -35,21 +36,8 @@ class TagCreate(View):
         return render(request, 'blog/tag_create.html', context={'form': bound_form})
 
 
-
-
-# def posts_list(request):
-#     posts = Post.objects.all()
-#     return render(request, 'blog/index.html', context={'posts': posts})
-
-
-# def tags_list(request):
-#     tags = Tag.objects.all()
-#     return render(request, 'blog/tags_list.html', context={'tags': tags})
-
-
-# def post_detail(request, slug):
-#     post = Post.objects.get(slug__iexact=slug)
-#     return render(request, 'blog/post_detail.html', context={'post': post})
+class PostCreate(View):
+    pass
 
 
 class PostDetail(ObjectDetailMixin, View):
@@ -57,12 +45,8 @@ class PostDetail(ObjectDetailMixin, View):
     template = 'blog/post_detail.html'
 
 
-
+#test modify
 class TagDetail(ObjectDetailMixin, View):
     model = Tag
     template = 'blog/tag_detail.html'
-
-# def tag_detail(request, slug):
-#     tag = Tag.objects.get(slug__iexact=slug)
-#     return render(request, 'blog/tag_detail.html', context={'tag': tag})
 
