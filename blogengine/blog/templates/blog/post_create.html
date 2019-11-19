@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+    Create Post - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <form class="" action="{% url 'post_create_url' %}" method="post">
+        {% csrf_token %}
+        {% for fild in form %}
+            <div class="form-group">
+                {% if fild.errors %}
+                    <div class="alert alert-danger">
+                        {{fild.errors}}
+                    </div>
+                {%endif%}
+                {{ fild.label }}
+                {{ fild}}
+            </div>
+        {%endfor%}
+
+
+        <button type="submit" class="btn btn-primary">Create Tag</button>
+
+
+
+    </form>
+{% endblock %}
