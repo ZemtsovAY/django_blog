@@ -9,6 +9,7 @@ from .models import Tag
 from .utils import ObjectDetailMixin
 from .utils import ObjectListMixin
 from .utils import ObjectCreateMixin
+from .utils import ObjectUpdateMixin
 
 from .forms import TagForm
 from .forms import PostForm
@@ -45,22 +46,12 @@ class TagDetail(ObjectDetailMixin, View):
     template = 'blog/tag_detail.html'
 
 
-class TagUpdate(View):
-    def get(self, request, slug):
-        # tag = Tag.objects.get(slug__iexact=slug)
-        tag = get_object_or_404(Tag, slug__iexact=slug)
-        bound_form = TagForm(instance=tag)
-        print(slug)
-        return render(request, 'blog/tag_update.html', context={'form': bound_form, 'tag': tag})
+class TagUpdate(ObjectUpdateMixin, View):
+    model = Tag
+    model_form = TagForm
+    template = 'blog/tag_update.html'
 
-    def post(self, request, slug):
-        tag = get_object_or_404(Tag, slug__iexact=slug)
-        bound_form = TagForm(request.POST, instance=tag)
 
-        if bound_form.is_valid():
-            new_tag = bound_form.save()
-            return redirect(new_tag)
-        return render(request, 'blog/tag_update.html', context={'form': bound_form, 'tag': tag})
 
 
 

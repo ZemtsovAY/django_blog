@@ -39,3 +39,24 @@ class ObjectCreateMixin:
             return redirect(new_tag)
         return render(request, self.template, context={'form': bound_form})
 
+class ObjectUpdateMixin:
+    model = None
+    model_form = None
+    template = None
+
+    def get(self, request, slug):
+        # tag = Tag.objects.get(slug__iexact=slug)
+        obj = get_object_or_404(self.model, slug__iexact=slug)
+        bound_form = self.model_form(instance=obj)
+        print(slug)
+        return render(request, 'blog/tag_update.html', context={'form': bound_form, 'obj': obj})
+
+    def post(self, request, slug):
+        obj = get_object_or_404(self.model, slug__iexact=slug)
+        bound_form = self.model_form(request.POST, instance=obj)
+
+        if bound_form.is_valid():
+            new_obj = bound_form.save()
+            return redirect(new_obj)
+        return render(request, 'blog/tag_update.html', context={'form': bound_form, 'obj': obj})
+
